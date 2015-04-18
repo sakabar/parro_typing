@@ -29,6 +29,7 @@ var lastClock = "" //直前に表示した時間
 var typedRightKeySum = 0; // 今までに正しく打ったキーの合計
 var charPerMinGoal = 120; // 文字/分の目標
 var delimiter = " " //ストローク表示の区切り
+var dispDelimiterFlag = true //ストローク表示に区切り文字を含めるか?
 
 function init(){
     keyInd = 0;
@@ -189,7 +190,13 @@ function update(kc){
 
 function getDispKeys(scriptKeys){
     var regex = new RegExp(delimiter, "g")
-    return scriptKeys.substring(keyInd, scriptKeys.Length).replace(regex, "");
+
+    if(dispDelimiterFlag){
+        return scriptKeys.substring(keyInd, scriptKeys.Length)
+    }
+    else{
+        return scriptKeys.substring(keyInd, scriptKeys.Length).replace(regex, "");
+    }
 }
 
 function finish(){
@@ -247,15 +254,15 @@ function toggleDispKey(){
 
 function clock(){
     if (counting){
-	lastClock = ((new Date() - startTime) / 1000).toFixed(1);
-	document.getElementById('timerInput').value=lastClock;
+        lastClock = ((new Date() - startTime) / 1000).toFixed(1);
+        document.getElementById('timerInput').value=lastClock;
 
-	//目標の描画
-	document.getElementById('charPerMinGoalMeter').value = typedCharNum - (charPerMinGoal * lastClock / 60.0);
-	paint();
+        //目標の描画
+        document.getElementById('charPerMinGoalMeter').value = typedCharNum - (charPerMinGoal * lastClock / 60.0);
+        paint();
     }
     else{
-	document.getElementById('timerInput').value=lastClock;
+        document.getElementById('timerInput').value=lastClock;
     }
 
     setTimeout("clock();",100);
@@ -265,10 +272,10 @@ function paint(){
     document.getElementById('dispCharInput').value = dispChars
 
     if(dispKeyFlag){
-	document.getElementById('dispKeyInput').value = dispKeys
+        document.getElementById('dispKeyInput').value = dispKeys
     }
     else{
-	document.getElementById('dispKeyInput').value = ""
+        document.getElementById('dispKeyInput').value = ""
     }
 
     document.getElementById('charPerMinInput').value = (typedCharNum *  60.0 * 1000 / (new Date() - startTime)).toFixed(0) + " 文字/分"
