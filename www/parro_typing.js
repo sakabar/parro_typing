@@ -251,16 +251,7 @@ function clock(){
 	document.getElementById('timerInput').value=lastClock;
 
 	//目標の描画
-	var nummBer = typedCharNum - (charPerMinGoal * lastClock / 60.0);
-	if (nummBer > 0){
-	    document.getElementById('charPerMinGoalInput').value="目標 +" + Math.abs(nummBer).toFixed(0) + "文字";
-
-	}
-	else{
-	    document.getElementById('charPerMinGoalInput').value="目標 -" + Math.abs(nummBer).toFixed(0) + "文字";
-	}
-
-
+	document.getElementById('charPerMinGoalMeter').value = typedCharNum - (charPerMinGoal * lastClock / 60.0);
 	paint();
     }
     else{
