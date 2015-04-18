@@ -158,7 +158,7 @@ function update(kc){
 
         //次のkeyが'@'のとき、文字をずらす
         //whileを使っているのは、ローマ字入力などのときに@が連続することがあるため。
-        while(scriptKeys[keyInd] == " "){
+        while(scriptKeys[keyInd] == delimiter){
 
 
             typedCharNum += 1;
