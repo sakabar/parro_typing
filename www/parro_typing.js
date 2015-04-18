@@ -28,7 +28,7 @@ var dispKeyFlag = true; //ストロークを表示するかどうか
 var lastClock = "" //直前に表示した時間
 var typedRightKeySum = 0; // 今までに正しく打ったキーの合計
 var charPerMinGoal = 120; // 文字/分の目標
-var delimiter = " " //ストローク表示の区切り
+var delimiter = "@" //ストローク表示の区切り
 var dispDelimiterFlag = true //ストローク表示に区切り文字を含めるか?
 
 function init(){
@@ -54,6 +54,7 @@ function toggleStartStop(){
         dispChars = scriptChars.substring(0, dispCharHideSize+dispCharWindowSize-1);
         dispKeys = getDispKeys(scriptKeys);
     }
+    paintKeys();
     paint();
 }
 
@@ -143,6 +144,7 @@ function typeKey(evt){
             finish();
         }
         else{
+            paintKeys()
             paint();
         }
     }
@@ -266,6 +268,134 @@ function clock(){
     }
 
     setTimeout("clock();",100);
+}
+
+function paintKeyboard(){
+    var canvas = document.getElementById('keyboradCanvas')
+    if(canvas.getContext){
+        var context = canvas.getContext('2d')
+        context.globalAlpha = 1.0 //透過度
+        context.fillStyle = "rgb(0, 0, 0)"
+        context.font = "30pt Arial"
+        context.textBaseline = "middle"
+        context.textAlign = "center"
+
+
+        origX = 10 //左キーボードの左上のX座標
+        origY = 10 //左キーボードの左上のY座標
+        sqLen = 50 //キーの大きさ
+        margin = 10 //左キーボードと右キーボードの間隔
+
+        //左キーボード描画
+        for(xind=0;xind<5;xind++){
+            for(yind=0;yind<4;yind++){
+                context.strokeRect(origX + sqLen*xind,origY + sqLen*yind,sqLen,sqLen)
+            }
+        }
+
+        //右キーボード描画
+        for(xind=0;xind<5;xind++){
+            for(yind=0;yind<4;yind++){
+                X = origX + sqLen * 5 + margin + xind*sqLen
+                Y = origY + yind*sqLen
+                context.strokeRect(X ,Y ,sqLen,sqLen)
+            }
+        }
+
+        //スペースキー描画
+        context.strokeRect(origX + sqLen*3,origY + sqLen*4 ,sqLen*4+margin,sqLen)
+
+        leftKeyboardChars = ["12345", "qwert", "asdfg", "zxcvb"]
+        rightKeyboardChars = ["67890", "yuiop", "hjkl;", "nm,./"]
+
+        xdf = 22 //文字のX軸補正
+        ydf = 28 //文字のY軸補正
+
+        //左キーボードの文字描画
+        for(xind=0;xind<5;xind++){
+            for(yind=0;yind<4;yind++){
+                context.fillText(leftKeyboardChars[yind][xind], origX+sqLen*xind+xdf, origY+sqLen*yind+ydf)
+            }
+        }
+
+        //右キーボードの文字描画
+        for(xind=0;xind<5;xind++){
+            for(yind=0;yind<4;yind++){
+                context.fillText(rightKeyboardChars[yind][xind], origX+sqLen*(5+xind)+xdf+margin, origY+sqLen*yind+ydf)
+            }
+        }
+    }
+}
+
+function paintKeys(){
+    var canvas = document.getElementById('keyboradCanvas')
+    if(canvas.getContext){
+        var context = canvas.getContext('2d')
+
+        context.clearRect(0,0,canvas.width, canvas.height)
+        paintKeyboard()
+
+        context.globalAlpha = 1.0 //透過度
+        context.font = "30pt Arial"
+        context.textBaseline = "middle"
+        context.textAlign = "center"
+
+        //特定のキーに色を塗る
+        tmp = scriptKeys.substring(keyInd, scriptKeys.Length)
+        delimInd = 0
+        dispCharCount = 1 //何文字先のキーまで色をつけるか
+        for(i=0;i<dispCharCount;i++){
+            t = tmp.indexOf(delimiter, delimInd+1)
+            if(t == -1){
+                delimInd = tmp.Length
+            }
+            else{
+                delimInd = t
+            }
+        }
+        str = tmp.substring(0, delimInd).toLowerCase();
+
+        keys = "1234567890qwertyuiopasdfghjkl;zxcvbnm,./"
+        context.globalAlpha = 0.5
+        for(i=0; i<str.length; i++){
+            ch = str[i]
+            ind = keys.indexOf(ch)
+            if(ind == -1){
+                if(ch == ' '){
+                    context.rect(origX+sqLen*3, origY+sqLen*4, sqLen*4+margin, sqLen)
+                }
+            }
+            else{
+                yinnnnd = Math.floor(ind / 10)
+                xinnnd = ind % 10
+                X = 0
+                if(xinnnd >= 5){
+                    X = origX+sqLen*xinnnd+margin
+                }
+                else{
+                    X = origX+sqLen*xinnnd
+                }
+                Y = origY+sqLen*yinnnnd
+                context.rect(X, Y, sqLen, sqLen)
+            }
+
+            if(i==0){
+                context.fillStyle = "rgb(255, 0, 0)"
+            }
+            else{
+                r = 0
+                b = 255 - 50 * i
+                context.fillStyle = "rgb(" + r + ", 0, " + b+ ")"
+            }
+
+            context.fill()
+            context.beginPath()
+            context.closePath()
+        }
+        context.beginPath()
+        context.closePath()
+
+    }
 }
 
 function paint(){
