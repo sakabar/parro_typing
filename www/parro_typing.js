@@ -243,3 +243,59 @@ function toggleDispKey(){
         paint()
     }
 }
+
+
+function clock(){
+    if (counting){
+	lastClock = ((new Date() - startTime) / 1000).toFixed(1);
+	document.getElementById('timerInput').value=lastClock;
+
+	//目標の描画
+	var nummBer = typedCharNum - (charPerMinGoal * lastClock / 60.0);
+	if (nummBer > 0){
+	    document.getElementById('charPerMinGoalInput').value="目標 +" + Math.abs(nummBer).toFixed(0) + "文字";
+
+	}
+	else{
+	    document.getElementById('charPerMinGoalInput').value="目標 -" + Math.abs(nummBer).toFixed(0) + "文字";
+	}
+
+
+	paint();
+    }
+    else{
+	document.getElementById('timerInput').value=lastClock;
+    }
+
+    setTimeout("clock();",100);
+}
+
+function paint(){
+    document.getElementById('dispCharInput').value = dispChars
+
+    if(dispKeyFlag){
+	document.getElementById('dispKeyInput').value = dispKeys
+    }
+    else{
+	document.getElementById('dispKeyInput').value = ""
+    }
+
+    document.getElementById('charPerMinInput').value = (typedCharNum *  60.0 * 1000 / (new Date() - startTime)).toFixed(0) + " 文字/分"
+    document.getElementById('keyPerMinInput').value = (typedRightKeyNum *  60.0 * 1000 / (new Date() - startTime)).toFixed(0) + " 打鍵/分"
+    document.getElementById('meanStrokeInput').value = "平均 " + ((typedRightKeyNum *  60.0 * 1000 / (new Date() - startTime)) / (typedCharNum *  60.0 * 1000 / (new Date() - startTime))).toFixed(2) + "打鍵/文字"
+    document.getElementById('typedWrongKeyRateInput').value = "誤り率 " + (typedWrongKeyNum / (typedRightKeyNum + typedWrongKeyNum) * 100).toFixed(1) + " % (" + typedWrongKeyNum + " / " + (typedRightKeyNum + typedWrongKeyNum) + ")";
+    var renzokuRight = (((typedWrongKeyNum * (1.0 - errorRateGoal) + 1) / errorRateGoal) - typedRightKeyNum).toFixed(0);
+    var renzokuWrong = (typedRightKeyNum * errorRateGoal / (1.0 - errorRateGoal) - typedWrongKeyNum).toFixed(2);
+    var next = (typedWrongKeyNum + 1) / (typedRightKeyNum + typedWrongKeyNum + 1)
+    if(next <= errorRateGoal){
+        document.getElementById('errorRateGoalInput').value = "+あと " + renzokuWrong + " 文字誤打";
+    }
+    else{
+        document.getElementById('errorRateGoalInput').value = "-あと " + renzokuRight + " 文字正打";
+    }
+    document.getElementById('typedRightKeySumInput').value ="総打鍵数 " + (typedRightKeySum + typedRightKeyNum);
+
+    // leftTBL.rows[0].cells[0].innerText = "○";
+}
+
+

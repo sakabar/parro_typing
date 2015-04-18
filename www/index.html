@@ -10,22 +10,22 @@
     <script type="text/javascript" src="parro_typing.js"></script>
   </head>
   <body>
-ぱろタイ (parro typing) にようこそ。<br/>
-ぱろタイはタイピングの練習をするためのソフトウェアです。<br/>
-現在、サンプルとして夏目漱石の「坊っちゃん」を課題文としていますが、後々はユーザが好きな文を課題文として設定できるようにする予定です。<br/>
-FireFox以外、動作を検証していません。<br/>
-<p>遊び方</p>
-<ol>
-<li>START/STOPボタンを押します</li>
-<li>課題文とそのキーストローク(アルファベット)が表示されます</li>
-<li>表示された通りにキーを押しましょう。テキストボックスにカーソルを合わせる必要はありません</li>
-<li>タイピングのスピードなどの情報が下部に表示されます。</li>
-</ol>
+    ぱろタイ (parro typing) にようこそ。<br/>
+    ぱろタイはタイピングの練習をするためのソフトウェアです。<br/>
+    現在、サンプルとして夏目漱石の「坊っちゃん」を課題文としていますが、後々はユーザが好きな文を課題文として設定できるようにする予定です。<br/>
+    FireFox以外、動作を検証していません。<br/>
+    <p>遊び方</p>
+    <ol>
+      <li>START/STOPボタンを押します</li>
+      <li>課題文とそのキーストローク(アルファベット)が表示されます</li>
+      <li>表示された通りにキーを押しましょう。テキストボックスにカーソルを合わせる必要はありません</li>
+      <li>タイピングのスピードなどの情報が下部に表示されます。</li>
+    </ol>
 
     <input id="timerInput" type="text" value="" maxlength="0" size="3" style="text-align: center; "><br/>
     <button type="startButton" onclick="javascript:toggleStartStop();">START/STOP</button><button type="dispKeyButton" onclick="javascript:toggleDispKey();">キー表示</button>
-<!-- <button type="saveButton" onclick="javascript:saveData();">save</button> -->
-<br/>
+    <!-- <button type="saveButton" onclick="javascript:saveData();">save</button> -->
+    <br/>
     <input id="dispCharInput" type="text" value="" maxlength="0" size="50"><br/>
     <input id="dispKeyInput" type="text" value="" maxlength="0" size="50"><br/>
     <input id="charPerMinInput" type="text" size="20" value="" maxlength="0"><input id="keyPerMinInput" type="text" size="20" value="" maxlength="0"><br/>
@@ -35,17 +35,17 @@ FireFox以外、動作を検証していません。<br/>
     <input id="errorRateGoalInput" type="text" size="20" value="" maxlength="0"><input id="typedWrongKeyRateInput" type="text" size="20" value="" maxlength="0"><br/>
     <input id="typedRightKeySumInput" type="text" size="20" value="" maxlength="0"><br/>
 
-<p>TODO</p>
-<ul>
-<li>グラフィカルにする、見映えをよくする</li>
-<li>ユーザによる課題文の設定に対応</li>
-<li>漢字直接入力のTUT-Codeへの対応</li>
-<li>苦手なキーの分析機能</li>
-<li>ツイート機能</li>
-<li>ユーザごとの情報をDBに保存</li>
-<li>複数ブラウザへの対応</li>
+    <p>TODO</p>
+    <ul>
+      <li>グラフィカルにする、見映えをよくする</li>
+      <li>ユーザによる課題文の設定に対応</li>
+      <li>漢字直接入力のTUT-Codeへの対応</li>
+      <li>苦手なキーの分析機能</li>
+      <li>ツイート機能</li>
+      <li>ユーザごとの情報をDBに保存</li>
+      <li>複数ブラウザへの対応</li>
 
-</ul>
+    </ul>
 
 
     <!-- <table border="0"> -->
@@ -78,64 +78,8 @@ FireFox以外、動作を検証していません。<br/>
     <!--   </tr> -->
     <!-- </table> -->
 
-    <script>
-      function clock(){
-      if (counting){
-      lastClock = ((new Date() - startTime) / 1000).toFixed(1);
-      document.getElementById('timerInput').value=lastClock;
 
-      //目標の描画
-      var nummBer = typedCharNum - (charPerMinGoal * lastClock / 60.0);
-      if (nummBer > 0){
-      document.getElementById('charPerMinGoalInput').value="目標 +" + Math.abs(nummBer).toFixed(0) + "文字";
-
-      }
-      else{
-      document.getElementById('charPerMinGoalInput').value="目標 -" + Math.abs(nummBer).toFixed(0) + "文字";
-      }
-
-
-      paint();
-      }
-      else{
-      document.getElementById('timerInput').value=lastClock;
-      }
-
-      setTimeout("clock();",100);
-      }
-
-      function paint(){
-      document.getElementById('dispCharInput').value = dispChars
-
-      if(dispKeyFlag){
-      document.getElementById('dispKeyInput').value = dispKeys
-      }
-else{
-      document.getElementById('dispKeyInput').value = ""
-}
-
-      document.getElementById('charPerMinInput').value = (typedCharNum *  60.0 * 1000 / (new Date() - startTime)).toFixed(0) + " 文字/分"
-      document.getElementById('keyPerMinInput').value = (typedRightKeyNum *  60.0 * 1000 / (new Date() - startTime)).toFixed(0) + " 打鍵/分"
-      document.getElementById('meanStrokeInput').value = "平均 " + ((typedRightKeyNum *  60.0 * 1000 / (new Date() - startTime)) / (typedCharNum *  60.0 * 1000 / (new Date() - startTime))).toFixed(2) + "打鍵/文字"
-      document.getElementById('typedWrongKeyRateInput').value = "誤り率 " + (typedWrongKeyNum / (typedRightKeyNum + typedWrongKeyNum) * 100).toFixed(1) + " % (" + typedWrongKeyNum + " / " + (typedRightKeyNum + typedWrongKeyNum) + ")";
-      var renzokuRight = (((typedWrongKeyNum * (1.0 - errorRateGoal) + 1) / errorRateGoal) - typedRightKeyNum).toFixed(0);
-      var renzokuWrong = (typedRightKeyNum * errorRateGoal / (1.0 - errorRateGoal) - typedWrongKeyNum).toFixed(2);
-      var next = (typedWrongKeyNum + 1) / (typedRightKeyNum + typedWrongKeyNum + 1)
-      if(next <= errorRateGoal){
-                 document.getElementById('errorRateGoalInput').value = "+あと " + renzokuWrong + " 文字誤打";
-                 }
-                 else{
-                 document.getElementById('errorRateGoalInput').value = "-あと " + renzokuRight + " 文字正打";
-                 }
-                 document.getElementById('typedRightKeySumInput').value ="総打鍵数 " + (typedRightKeySum + typedRightKeyNum);
-
-                 // leftTBL.rows[0].cells[0].innerText = "○";
-                 }
-
-
-                 clock();
-
-                 document.onkeydown = typeKey;
-                 </script>
+    <!-- このscriptタグはinputなどの要素より後ろに置く必要がある -->
+    <script type="text/javascript" src="body.js"></script>
   </body>
 </html>
