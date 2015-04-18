@@ -28,6 +28,11 @@ var dispKeyFlag = true; //ストロークを表示するかどうか
 var lastClock = "" //直前に表示した時間
 var typedRightKeySum = 0; // 今までに正しく打ったキーの合計
 var charPerMinGoal = 120; // 文字/分の目標
+var delimiter = ' ' //ストローク表示の区切り
+
+
+
+
 
 function init(){
     keyInd = 0;
@@ -154,9 +159,11 @@ function update(kc){
         typedRightKeyNum += 1;
         keyInd += 1;
 
+
         //次のkeyが'@'のとき、文字をずらす
         //whileを使っているのは、ローマ字入力などのときに@が連続することがあるため。
-        while(scriptKeys[keyInd] == '@'){
+        while(scriptKeys[keyInd] == " "){
+
 
             typedCharNum += 1;
             charInd += 1;

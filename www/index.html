@@ -3,14 +3,28 @@
     <title>ぱろタイ</title>
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" type="text/css" href="table.css" media="all">
+    <link rel="stylesheet" type="text/css" href="main.css" media="all">
     <script type="text/javascript" src="chars.js"></script>
     <script type="text/javascript" src="keys.js"></script>
     <script type="text/javascript" src="parro_typing.js"></script>
   </head>
   <body>
+ぱろタイ (parro typing) にようこそ。<br/>
+ぱろタイはタイピングの練習をするためのソフトウェアです。<br/>
+現在、サンプルとして夏目漱石の「坊っちゃん」を課題文としていますが、後々はユーザが好きな文を課題文として設定できるようにする予定です。<br/>
+FireFox以外、動作を検証していません。<br/>
+<p>遊び方</p>
+<ol>
+<li>START/STOPボタンを押します</li>
+<li>課題文とそのキーストローク(アルファベット)が表示されます</li>
+<li>表示された通りにキーを押しましょう。テキストボックスにカーソルを合わせる必要はありません</li>
+<li>タイピングのスピードなどの情報が下部に表示されます。</li>
+</ol>
+
     <input id="timerInput" type="text" value="" maxlength="0" size="3" style="text-align: center; "><br/>
-    <button type="startButton" onclick="javascript:toggleStartStop();">START/STOP</button><button type="dispKeyButton" onclick="javascript:toggleDispKey();">キー表示</button><button type="saveButton" onclick="javascript:saveData();">save</button><br/>
+    <button type="startButton" onclick="javascript:toggleStartStop();">START/STOP</button><button type="dispKeyButton" onclick="javascript:toggleDispKey();">キー表示</button>
+<!-- <button type="saveButton" onclick="javascript:saveData();">save</button> -->
+<br/>
     <input id="dispCharInput" type="text" value="" maxlength="0" size="50"><br/>
     <input id="dispKeyInput" type="text" value="" maxlength="0" size="50"><br/>
     <input id="charPerMinInput" type="text" size="20" value="" maxlength="0"><input id="keyPerMinInput" type="text" size="20" value="" maxlength="0"><br/>
@@ -19,6 +33,19 @@
 
     <input id="errorRateGoalInput" type="text" size="20" value="" maxlength="0"><input id="typedWrongKeyRateInput" type="text" size="20" value="" maxlength="0"><br/>
     <input id="typedRightKeySumInput" type="text" size="20" value="" maxlength="0"><br/>
+
+<p>TODO</p>
+<ul>
+<li>グラフィカルにする、見映えをよくする</li>
+<li>ユーザによる課題文の設定に対応</li>
+<li>漢字直接入力のTUT-Codeへの対応</li>
+<li>苦手なキーの分析機能</li>
+<li>ツイート機能</li>
+<li>ユーザごとの情報をDBに保存</li>
+<li>複数ブラウザへの対応</li>
+
+</ul>
+
 
     <!-- <table border="0"> -->
     <!--   <tr> -->
