@@ -238,7 +238,7 @@ function getCookie(name){
 
 
 function toggleDispKey(){
-    dispKeyFrag = ! dispKeyFrag
+    dispKeyFlag = ! dispKeyFlag
     if(counting){
         paint()
     }
