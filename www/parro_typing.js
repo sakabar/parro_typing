@@ -281,7 +281,7 @@ function paintKeyboard(){
         context.textAlign = "center"
 
 
-        origX = 10 //左キーボードの左上のX座標
+        origX = 110 //左キーボードの左上のX座標
         origY = 10 //左キーボードの左上のY座標
         sqLen = 50 //キーの大きさ
         margin = 10 //左キーボードと右キーボードの間隔
@@ -305,6 +305,9 @@ function paintKeyboard(){
         //スペースキー描画
         context.strokeRect(origX + sqLen*3,origY + sqLen*4 ,sqLen*4+margin,sqLen)
 
+        //シフトキー描画
+        context.strokeRect(origX - sqLen*2,origY + sqLen*3 ,sqLen*2, sqLen)
+
         leftKeyboardChars = ["12345", "qwert", "asdfg", "zxcvb"]
         rightKeyboardChars = ["67890", "yuiop", "hjkl;", "nm,./"]
 
@@ -324,6 +327,10 @@ function paintKeyboard(){
                 context.fillText(rightKeyboardChars[yind][xind], origX+sqLen*(5+xind)+xdf+margin, origY+sqLen*yind+ydf)
             }
         }
+
+        //シフトキーの文字描画
+        context.fillText("shift", origX-sqLen*2+xdf+30, origY+sqLen*3+ydf)
+
     }
 }
 
@@ -353,13 +360,21 @@ function paintKeys(){
                 delimInd = t
             }
         }
-        str = tmp.substring(0, delimInd).toLowerCase();
+        str = tmp.substring(0, delimInd)
 
         keys = "1234567890qwertyuiopasdfghjkl;zxcvbnm,./"
         context.globalAlpha = 0.5
         for(i=0; i<str.length; i++){
             ch = str[i]
-            ind = keys.indexOf(ch)
+
+            if((ch != ch.toLowerCase()) && i == 0){
+                //シフトキー
+                context.fillStyle = "rgb(255, 0, 0)"
+                context.rect(origX-sqLen*2, origY+sqLen*3, sqLen*2, sqLen)
+            }
+
+
+            ind = keys.indexOf(ch.toLowerCase())
             if(ind == -1){
                 if(ch == ' '){
                     context.rect(origX+sqLen*3, origY+sqLen*4, sqLen*4+margin, sqLen)
@@ -425,5 +440,3 @@ function paint(){
 
     // leftTBL.rows[0].cells[0].innerText = "○";
 }
-
-
