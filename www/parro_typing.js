@@ -279,10 +279,10 @@ function paint(){
     var renzokuWrong = (typedRightKeyNum * errorRateGoal / (1.0 - errorRateGoal) - typedWrongKeyNum).toFixed(2);
     var next = (typedWrongKeyNum + 1) / (typedRightKeyNum + typedWrongKeyNum + 1)
     if(next <= errorRateGoal){
-        document.getElementById('errorRateGoalInput').value = "+あと " + renzokuWrong + " 文字誤打";
+        document.getElementById('errorRateGoalMeter').value = renzokuWrong;
     }
     else{
-        document.getElementById('errorRateGoalInput').value = "-あと " + renzokuRight + " 文字正打";
+        document.getElementById('errorRateGoalMeter').value = -renzokuRight;
     }
     document.getElementById('typedRightKeySumInput').value ="総打鍵数 " + (typedRightKeySum + typedRightKeyNum);
 
