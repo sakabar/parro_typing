@@ -28,11 +28,7 @@ var dispKeyFlag = true; //ストロークを表示するかどうか
 var lastClock = "" //直前に表示した時間
 var typedRightKeySum = 0; // 今までに正しく打ったキーの合計
 var charPerMinGoal = 120; // 文字/分の目標
-var delimiter = ' ' //ストローク表示の区切り
-
-
-
-
+var delimiter = " " //ストローク表示の区切り
 
 function init(){
     keyInd = 0;
@@ -43,7 +39,7 @@ function init(){
     typedRightKeyNum = 0;
     typedWrongKeyNum = 0;
     keyHist = "";
-    typedRightKeySum = Number(getCookie("typedRightKeySum"));  //122415 // // // Number(getCookie("typedRightKeySum"));
+    typedRightKeySum = Number(getCookie("typedRightKeySum"));
 }
 function toggleStartStop(){
     if(counting){
@@ -55,7 +51,7 @@ function toggleStartStop(){
         startTime = new Date();
         counting = true;
         dispChars = scriptChars.substring(0, dispCharHideSize+dispCharWindowSize-1);
-        dispKeys = scriptKeys;
+        dispKeys = getDispKeys(scriptKeys);
     }
     paint();
 }
@@ -155,7 +151,7 @@ function typeKey(evt){
 
 //入力されたキーコードを引数にとって、状態を更新する
 function update(kc){
-  if(kc == scriptKeys.charCodeAt(keyInd)){
+    if(kc == scriptKeys.charCodeAt(keyInd)){
         typedRightKeyNum += 1;
         keyInd += 1;
 
@@ -184,11 +180,16 @@ function update(kc){
             dispChars += " ";
         }
         dispChars += scriptChars.substring(charInd+dispCharHideSize, charInd+dispCharHideSize+dispCharWindowSize);
-        dispKeys = scriptKeys.substring(keyInd, scriptKeys.Length);
+        dispKeys = getDispKeys(scriptKeys)
     }
     else{
         typedWrongKeyNum += 1;
     }
+}
+
+function getDispKeys(scriptKeys){
+    var regex = new RegExp(delimiter, "g")
+    return scriptKeys.substring(keyInd, scriptKeys.Length).replace(regex, "");
 }
 
 function finish(){
