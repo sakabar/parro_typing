@@ -10,3 +10,9 @@ td {
 input {
     font-size: 200%;
 }
+
+meter {
+    -moz-appearance: meterbar;
+    width: 500px;
+    height: 30px;
+}
