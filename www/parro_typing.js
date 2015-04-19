@@ -282,10 +282,10 @@ function paintKeyboard(){
         context.textAlign = "center"
 
 
-        origX = 110 //左キーボードの左上のX座標
+        origX = 100 //左キーボードの左上のX座標
         origY = 10 //左キーボードの左上のY座標
-        sqLen = 50 //キーの大きさ
-        margin = 10 //左キーボードと右キーボードの間隔
+        sqLen = 60 //キーの大きさ
+        margin = sqLen/4 //左キーボードと右キーボードの間隔
 
         //左キーボード描画
         for(xind=0;xind<5;xind++){
@@ -299,6 +299,17 @@ function paintKeyboard(){
                     context.strokeRect(origX + sqLen*xind,origY + sqLen*yind,sqLen,sqLen)
                 }
             }
+        }
+
+        //ホームポジションの描画(fjキーを強調)
+        if(stepwiseKeyboardFlag){
+            eps = 2
+            context.strokeRect(origX + sqLen * 5 + margin + 1*sqLen + sqLen+ eps ,origY + 2*sqLen + eps ,sqLen-eps*2,sqLen-eps*2)
+            context.strokeRect(origX + sqLen*3+ sqLen +eps  ,origY + sqLen*2+ eps,sqLen-eps*2,sqLen-eps*2)}
+        else{
+            eps = 2
+            context.strokeRect(origX + sqLen * 5 + margin + 1*sqLen + eps ,origY + 2*sqLen + eps ,sqLen-eps*2,sqLen-eps*2)
+            context.strokeRect(origX + sqLen*3+eps,origY + sqLen*2+eps,sqLen-eps*2,sqLen-eps*2)
         }
 
         //右キーボード描画
