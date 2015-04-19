@@ -476,7 +476,7 @@ function paintKey(ch, cnt0, charCnt){
                 context.fillStyle = "rgb(255, 0, 0)"
             }
             else{
-                context.fillStyle = "rgb(100, 0, 0)"
+                context.fillStyle = "rgb(178, 34, 34)"
             }
         }
         else if(cnt0 == 1){
@@ -484,7 +484,7 @@ function paintKey(ch, cnt0, charCnt){
                 context.fillStyle = "rgb(0, 0, 255)"
             }
             else{
-                context.fillStyle = "rgb(0, 0, 100)"
+                context.fillStyle = "rgb(30, 144, 255)"
             }
         }
         else{
@@ -492,7 +492,7 @@ function paintKey(ch, cnt0, charCnt){
                 context.fillStyle = "rgb(0, 255, 0)"
             }
             else{
-                context.fillStyle = "rgb(0, 100, 0)"
+                context.fillStyle = "rgb(50, 205, 50)"
             }
         }
 
