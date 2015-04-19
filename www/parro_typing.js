@@ -30,6 +30,7 @@ var typedRightKeySum = 0; // 今までに正しく打ったキーの合計
 var charPerMinGoal = 120; // 文字/分の目標
 var delimiter = " " //ストローク表示の区切り
 var dispDelimiterFlag = true //ストローク表示に区切り文字を含めるか?
+var stepwiseKeyboardFlag = true //キーボードの表示を階段状にする
 
 function init(){
     keyInd = 0;
@@ -289,7 +290,14 @@ function paintKeyboard(){
         //左キーボード描画
         for(xind=0;xind<5;xind++){
             for(yind=0;yind<4;yind++){
-                context.strokeRect(origX + sqLen*xind,origY + sqLen*yind,sqLen,sqLen)
+                if(stepwiseKeyboardFlag){
+                    X = origX + sqLen*xind + (sqLen/2)*yind
+                    Y = origY + sqLen*yind
+                    context.strokeRect(X ,Y ,sqLen,sqLen)
+                }
+                else{
+                    context.strokeRect(origX + sqLen*xind,origY + sqLen*yind,sqLen,sqLen)
+                }
             }
         }
 
@@ -298,15 +306,32 @@ function paintKeyboard(){
             for(yind=0;yind<4;yind++){
                 X = origX + sqLen * 5 + margin + xind*sqLen
                 Y = origY + yind*sqLen
-                context.strokeRect(X ,Y ,sqLen,sqLen)
+
+                if(stepwiseKeyboardFlag){
+                    context.strokeRect(X+(sqLen/2)*yind ,Y ,sqLen,sqLen)
+                }
+                else{
+                    context.strokeRect(X ,Y ,sqLen,sqLen)
+                }
             }
         }
 
         //スペースキー描画
-        context.strokeRect(origX + sqLen*3,origY + sqLen*4 ,sqLen*4+margin,sqLen)
+        if(stepwiseKeyboardFlag){
+            context.strokeRect(origX + sqLen*3 + sqLen*3/2,origY + sqLen*4 ,sqLen*4+margin,sqLen)
+        }
+        else{
+            context.strokeRect(origX + sqLen*3,origY + sqLen*4 ,sqLen*4+margin,sqLen)
+        }
 
         //シフトキー描画
-        context.strokeRect(origX - sqLen*2,origY + sqLen*3 ,sqLen*2, sqLen)
+        if(stepwiseKeyboardFlag){
+            context.strokeRect(origX - sqLen*2 + sqLen*3/2,origY + sqLen*3 ,sqLen*2, sqLen)
+        }
+        else{
+            context.strokeRect(origX - sqLen*2,origY + sqLen*3 ,sqLen*2, sqLen)
+        }
+
 
         leftKeyboardChars = ["12345", "qwert", "asdfg", "zxcvb"]
         rightKeyboardChars = ["67890", "yuiop", "hjkl;", "nm,./"]
@@ -317,19 +342,34 @@ function paintKeyboard(){
         //左キーボードの文字描画
         for(xind=0;xind<5;xind++){
             for(yind=0;yind<4;yind++){
-                context.fillText(leftKeyboardChars[yind][xind], origX+sqLen*xind+xdf, origY+sqLen*yind+ydf)
+                if(stepwiseKeyboardFlag){
+                    context.fillText(leftKeyboardChars[yind][xind], origX+sqLen*xind+xdf+sqLen/2*yind, origY+sqLen*yind+ydf)
+                }
+                else{
+                    context.fillText(leftKeyboardChars[yind][xind], origX+sqLen*xind+xdf, origY+sqLen*yind+ydf)
+                }
             }
         }
 
         //右キーボードの文字描画
         for(xind=0;xind<5;xind++){
             for(yind=0;yind<4;yind++){
-                context.fillText(rightKeyboardChars[yind][xind], origX+sqLen*(5+xind)+xdf+margin, origY+sqLen*yind+ydf)
+                if(stepwiseKeyboardFlag){
+                    context.fillText(rightKeyboardChars[yind][xind], origX+sqLen*(5+xind)+xdf+margin+sqLen/2*yind, origY+sqLen*yind+ydf)
+                }
+                else{
+                    context.fillText(rightKeyboardChars[yind][xind], origX+sqLen*(5+xind)+xdf+margin, origY+sqLen*yind+ydf)
+                }
             }
         }
 
         //シフトキーの文字描画
-        context.fillText("shift", origX-sqLen*2+xdf+30, origY+sqLen*3+ydf)
+        if(stepwiseKeyboardFlag){
+            context.fillText("shift", origX-sqLen*2+xdf+30+sqLen/2*3, origY+sqLen*3+ydf)
+        }
+        else{
+            context.fillText("shift", origX-sqLen*2+xdf+30, origY+sqLen*3+ydf)
+        }
 
     }
 }
@@ -370,14 +410,25 @@ function paintKeys(){
             if((ch != ch.toLowerCase()) && i == 0){
                 //シフトキー
                 context.fillStyle = "rgb(255, 0, 0)"
-                context.rect(origX-sqLen*2, origY+sqLen*3, sqLen*2, sqLen)
+                if(stepwiseKeyboardFlag){
+                    context.rect(origX-sqLen*2+sqLen/2*3, origY+sqLen*3, sqLen*2, sqLen)
+                }
+                else{
+                    context.rect(origX-sqLen*2, origY+sqLen*3, sqLen*2, sqLen)
+                }
             }
 
 
             ind = keys.indexOf(ch.toLowerCase())
             if(ind == -1){
                 if(ch == ' '){
-                    context.rect(origX+sqLen*3, origY+sqLen*4, sqLen*4+margin, sqLen)
+                    //スペースキー
+                    if(stepwiseKeyboardFlag){
+                        context.rect(origX+sqLen*3+sqLen/2*3, origY+sqLen*4, sqLen*4+margin, sqLen)
+                    }
+                    else{
+                        context.rect(origX+sqLen*3, origY+sqLen*4, sqLen*4+margin, sqLen)
+                    }
                 }
             }
             else{
@@ -391,7 +442,12 @@ function paintKeys(){
                     X = origX+sqLen*xinnnd
                 }
                 Y = origY+sqLen*yinnnnd
-                context.rect(X, Y, sqLen, sqLen)
+                if(stepwiseKeyboardFlag){
+                    context.rect(X+sqLen/2*yinnnnd, Y, sqLen, sqLen)
+                }
+                else{
+                    context.rect(X, Y, sqLen, sqLen)
+                }
             }
 
             if(i==0){
