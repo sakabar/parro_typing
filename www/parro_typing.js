@@ -32,7 +32,7 @@ var delimiter = " " //ストローク表示の区切り
 var dispDelimiterFlag = true //ストローク表示に区切り文字を含めるか?
 var stepwiseKeyboardFlag = true //キーボードの表示を階段状にする
 var dispCharCount = 3 //何文字先のキーまで色をつけるか
-var paintKeyFlag = false //キーをグラフィカルに表示するか?
+var paintKeyFlag = true //キーをグラフィカルに表示するか?
 
 function init(){
     keyInd = 0;
@@ -297,9 +297,9 @@ function paintKeyboard(){
         context.textAlign = "center"
 
 
-        origX = 100 //左キーボードの左上のX座標
-        origY = 10 //左キーボードの左上のY座標
         sqLen = 60 //キーの大きさ
+        origX = sqLen * 2 + 20 //左キーボードの左上のX座標
+        origY = 10 //左キーボードの左上のY座標
         margin = sqLen/4 //左キーボードと右キーボードの間隔
 
         //左キーボード描画
