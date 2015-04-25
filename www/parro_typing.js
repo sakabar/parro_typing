@@ -32,6 +32,7 @@ var delimiter = " " //ストローク表示の区切り
 var dispDelimiterFlag = true //ストローク表示に区切り文字を含めるか?
 var stepwiseKeyboardFlag = true //キーボードの表示を階段状にする
 var dispCharCount = 3 //何文字先のキーまで色をつけるか
+var paintKeyFlag = false //キーをグラフィカルに表示するか?
 
 function init(){
     keyInd = 0;
@@ -56,7 +57,9 @@ function toggleStartStop(){
         dispChars = scriptChars.substring(0, dispCharHideSize+dispCharWindowSize-1);
         dispKeys = getDispKeys(scriptKeys);
     }
-    paintKeys();
+    if(paintKeyFlag){
+        paintKeys();
+    }
     paint();
 }
 
@@ -146,7 +149,9 @@ function typeKey(evt){
             finish();
         }
         else{
-            paintKeys()
+            if(paintKeyFlag){
+                paintKeys()
+            }
             paint();
         }
     }
@@ -254,6 +259,15 @@ function toggleDispKey(){
         paint()
     }
 }
+
+function togglePaintKey(){
+    paintKeyFlag = ! paintKeyFlag
+    if(counting){
+        paint()
+    }
+}
+
+
 
 
 function clock(){
