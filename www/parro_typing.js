@@ -29,9 +29,9 @@ var lastClock = "" //直前に表示した時間
 var typedRightKeySum = 0; // 今までに正しく打ったキーの合計
 var charPerMinGoal = 120; // 文字/分の目標
 var delimiter = " " //ストローク表示の区切り
-var dispDelimiterFlag = true //ストローク表示に区切り文字を含めるか?
+var dispDelimiterFlag = false //ストローク表示に区切り文字を含めるか?
 var stepwiseKeyboardFlag = true //キーボードの表示を階段状にする
-var dispCharCount = 3 //何文字先のキーまで色をつけるか
+var dispCharCount = 1 //何文字先のキーまで色をつけるか
 var paintKeyFlag = true //キーをグラフィカルに表示するか?
 
 function init(){
