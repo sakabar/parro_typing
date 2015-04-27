@@ -1,86 +1,127 @@
-<html lang="ja">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
   <head>
     <title>ぱろタイ</title>
-    <meta name="robots" content="noindex, nofollow">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="main.css" media="all">
-    <script type="text/javascript" src="js/chars.js"></script>
-    <script type="text/javascript" src="js/keys.js"></script>
-    <script type="text/javascript" src="js/parro_typing.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <meta name="copyright" content="Nikukyu-Punch" />
+    <meta name="description" content="ぱろタイは、写経を通してタイピングスキルを向上させることを目的とするゲームです" />
+    <meta name="keywords" content="ぱろタイ,ぱろタイピング,parro_typing,parro,typing" />
+    <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
-  <body onload="paintKeyboard()">
-    ぱろタイ (parro typing) にようこそ。<br/>
-    ぱろタイはタイピングの練習をするためのソフトウェアです。<br/>
-    現在、サンプルとして夏目漱石の「坊っちゃん」を課題文としていますが、後々はユーザが好きな文を課題文として設定できるようにする予定です。<br/>
-    FireFox以外、動作を検証していません。<br/>
-    <p>遊び方</p>
-    <ol>
-      <li>開始/終了ボタンを押します</li>
-      <li>課題文とそのキーストローク(アルファベット)が表示されます</li>
-      <li>表示された通りにキーを押しましょう。テキストボックスにカーソルを合わせる必要はありません</li>
-      <li>タイピングのスピードなどの情報が下部に表示されます。</li>
-    </ol>
-
-    <div style="padding: 10px; margin-bottom: 10px; border: 5px double #333333;">
-      <input id="timerInput" type="text" value="" maxlength="0" size="3" style="text-align: center; "><input id="typedRightKeySumInput" type="text" size="20" value="" maxlength="0" style="text-align: center; "><br/>
-      <button type="startButton" onclick="javascript:toggleStartStop();">開始/終了</button><button type="dispKeyButton" onclick="javascript:toggleDispKey();">キー表示</button><button type="paintKeyButton" onclick="javascript:togglePaintKey();">キー表示2</button>
-      <!-- <button type="saveButton" onclick="javascript:saveData();">save</button> -->
-      <br/>
-      <input id="dispCharInput" type="text" value="" maxlength="0" size="50"><br/>
-      <input id="dispKeyInput" type="text" value="" maxlength="0" size="50"><br/>
-      <canvas id="keyboradCanvas" height="350" width="1000">キーボードを表示するには、canvasタグをサポートしたブラウザが必要です</canvas><br/>
-      <input type="text" value="スピード:" maxlength="0" size="5" style="text-align: right; border: none;" /><meter id="charPerMinGoalMeter" min="-10" max="10" high="0" low="-5" optimum="10">0</meter><br/>
-      <input type="text" value="正確性:" maxlength="0" size="5" style="text-align: right; border: none;"/><meter id="errorRateGoalMeter" min="-45" max="5" high="0" low="-20" optimum="5">-45</meter><br/>
-      <input id="charPerMinInput" type="text" size="20" value="" maxlength="0"><input id="keyPerMinInput" type="text" size="20" value="" maxlength="0"><br/>
-      <!-- <input id="errorRateGoalInput" type="text" size="20" value="" maxlength="0"> -->
-      <input id="typedWrongKeyRateInput" type="text" size="20" value="" maxlength="0"><input id="meanStrokeInput" type="text" size="20" value="" maxlength="0"><br/>
-    </div>
-    <p>TODO</p>
-    <ul>
-      <li>グラフィカルにする、見映えをよくする</li>
-      <li>ユーザによる課題文の設定に対応</li>
-      <li>漢字直接入力のTUT-Codeへの対応</li>
-      <li>苦手なキーの分析機能</li>
-      <li>ツイート機能</li>
-      <li>ユーザごとの情報をDBに保存</li>
-      <li>複数ブラウザへの対応</li>
-
-    </ul>
 
 
-    <!-- <table border="0"> -->
-    <!--   <tr> -->
-    <!--     <td> -->
-    <!--       <table id="leftTBL" border="1" width="200" height="160"> -->
-    <!--         <tr><td></td><td></td><td></td><td></td><td></td></tr> -->
-    <!--         <tr><td></td><td></td><td></td><td></td><td></td></tr> -->
-    <!--         <tr><td></td><td></td><td></td><td></td><td></td></tr> -->
-    <!--         <tr><td></td><td></td><td></td><td></td><td></td></tr> -->
-    <!--       </table> -->
-    <!--     </td> -->
-    <!--     <td> -->
-    <!--       <table id="space" border="1" width="40" height="160"> -->
-    <!--         <tr></tr> -->
-    <!--         <tr></tr> -->
-    <!--         <tr></tr> -->
-    <!--         <tr></tr> -->
-    <!--         <tr><td></td></tr> -->
-    <!--       </table> -->
-    <!--     </td> -->
-    <!--     <td> -->
-    <!--       <table id="rightTBL" border="1"  width="200" height="160"> -->
-    <!--         <tr><td></td><td></td><td></td><td></td><td></td></tr> -->
-    <!--         <tr><td></td><td></td><td></td><td></td><td></td></tr> -->
-    <!--         <tr><td></td><td></td><td></td><td></td><td></td></tr> -->
-    <!--         <tr><td></td><td></td><td></td><td></td><td></td></tr> -->
-    <!--       </table> -->
-    <!--     </td> -->
-    <!--   </tr> -->
-    <!-- </table> -->
+  <body>
 
 
-    <!-- このscriptタグはinputなどの要素より後ろに置く必要がある -->
-    <script type="text/javascript" src="js/body.js"></script>
-  </body>
-</html>
+    <div id="container">
+
+
+      <div id="main">
+
+
+        <div id="header">
+          <h1>ぱろタイは、写経を通してタイピングスキルを向上させることを目的とするゲームです</h1>
+        </div>
+        <!--/header-->
+
+
+        <div class="mainbox">
+
+          <h2>はじめに</h2>
+          <p>ぱろタイ (parro typing) にようこそ。ぱろタイはタイピングの練習をするためのソフトウェアです。現在、サンプルとして夏目漱石の「坊っちゃん」を課題文としていますが、後々はユーザが好きな文を課題文として設定できるようにする予定です。FireFox以外、動作を検証していません。</p>
+
+          <h2>遊び方</h2>
+          <ol>
+            <li>開始/終了ボタンを押します</li>
+            <li>課題文とそのキーストローク(アルファベット)が表示されます</li>
+            <li>表示された通りにキーを押しましょう</li>
+            <li>タイピングのスピードなどの情報が下部に表示されます。</li>
+          </ol>
+
+          <h2>What's New</h2>
+          <dl class="new">
+            <dt>2015/04/27</dt>
+            <dd>ホームページ作成中…</dd>
+          </dl>
+
+          <h2>TODO</h2>
+          <ul>
+            <li>入力に関する挙動</li>
+            <ul>
+              <li>バックスペースによる取り消し</li>
+              <li>スペースキーによる模擬変換</li>
+              <li>エンターキーによる模擬確定</li>
+            </ul>
+            <li>ログイン関係</li>
+            <ul>
+              <li>ログイン機能の実装</li>
+              <li>ユーザごとの情報をDBに保存</li>
+            </ul>
+            <li>キーボード</li>
+            <ul>
+              <li>ローマ字のカスタマイズ(chi/tiの打ち分けなど)</li>
+              <li>Dvorak</li>
+              <li>JISかな</li>
+              <li>T-Code</li>
+              <li>TUT-Code</li>
+            </ul>
+            <li>ブラウザ</li>
+            <ul>
+              <li>Google Chromeでの検証</li>
+            </ul>
+            <li>分析</li>
+            <ul>
+              <li>苦手なキーの分析機能</li>
+            </ul>
+            <li>課題文</li>
+            <ul>
+              <li>ユーザによる課題文の設定に対応</li>
+            </ul>
+            <li>SNS連携</li>
+            <ul>
+              <li>ツイート機能</li>
+            </ul>
+          </ul>
+
+        </div>
+        <!--/mainbox-->
+
+      </div>
+      <!--/main-->
+
+
+      <div id="side">
+
+        <a href="index.html"><img src="images/logo.gif" alt="SAMPLE WEBSITE" name="logo" width="200" height="140" id="logo" /></a><br />
+
+        <h3>会員登録/ログイン</h3>
+        <p>まだできません</p>
+
+        <!-- <input type="button" onclick="location.href='game.html'" value="ぱろタイで遊ぶ"> -->
+        <center><input type="button" onclick="window.open('game.html')" value="ぱろタイで遊ぶ"></center>
+
+          <ul class="menu">
+            <li><a href="index.html">top page</a></li>
+            <li><a href="about.html">about</a></li>
+            <li><a href="link.html">link</a></li>
+          </ul>
+
+        </div>
+        <!--/side-->
+
+
+        <div id="footer">
+          Copyright&copy; 2015- ぱろタイ All Rights Reserved.<br />
+          <a href="http://nikukyu-punch.com/" target="_blank">Template design by Nikukyu-Punch</a>
+        </div>
+        <!--/footer-->
+
+
+      </div>
+      <!--/container-->
+
+
+    </body>
+  </html>
