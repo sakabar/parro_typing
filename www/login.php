@@ -1,3 +1,32 @@
+<?php
+
+$dsn = 'mysql:dbname=transcribing_parro_typing;host=mysql507.db.sakura.ne.jp';
+$user = 'transcribing';
+$password = 'temppass01';
+
+try{
+    $dbh = new PDO($dsn, $user, $password);
+    $dbh->query('SET NAMES utf8');
+
+    $stmt = $dbh->prepare('SELECT * FROM player WHERE player_name = ?');
+    $stmt->bindValue(1, $_POST['name'], PDO::PARAM_STR);
+    $stmt->execute();
+
+
+    $flag = False;
+    while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+        if($result['player_pass'] === crypt($_POST['pass'], $result['player_pass'])){
+            $flag = True;
+            break;
+        }
+    }
+}
+catch (PDOException $e){
+    print('Error:'.$e->getMessage());
+    die();
+}
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
   <head>
@@ -31,14 +60,18 @@
 
         <div class="mainbox">
           <h2>ログイン</h2>
-          <!-- <p></p> -->
-          <form action="login.php" method="post">
-            user name : <input type="text" maxlength="8" name="name"/><br/>
-            (半角英数8文字以内) <br/>
-            password : <input type="password" maxlength="10" name="pass"/><br/>
-            <input type="submit"/>
-          </form>
-
+          <p>
+<?php
+    if($flag){
+        echo "こんにちは、${_POST['name']}さん。ログインに成功しました。";
+        session_start();
+    }
+    else{
+        echo "ログインに失敗しました。ユーザ名またはパスワードが間違っています。";
+        echo '<li><a href="login.html">ログイン</a></li>';
+    }
+?>
+          </p>
         </div>
         <!--/mainbox-->
 
