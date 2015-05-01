@@ -4,13 +4,16 @@ $dsn = 'mysql:dbname=transcribing_parro_typing;host=mysql507.db.sakura.ne.jp';
 $user = 'transcribing';
 $password = 'temppass01';
 
+$name = $_POST['name'];
+$pass = $_POST['pass'];
+
 try{
     $dbh = new PDO($dsn, $user, $password);
     $dbh->query('SET NAMES utf8');
 
     $sql = 'insert into player (player_name, player_pass) values (?, ?)';
     $stmt = $dbh->prepare($sql);
-    $flag = $stmt->execute(array($_POST['name'], crypt($_POST['pass'])));
+    $flag = $stmt->execute(array($name, crypt($pass)));
 }
 catch (PDOException $e){
     print('Error:'.$e->getMessage());
@@ -51,11 +54,14 @@ catch (PDOException $e){
 	  <p>
 <?php
 if ($flag){
-  print("${_POST['name']}さん、ぱろタイにようこそ！新規登録が成功しました。");
-  print('<li><a href="login.html">ログインする</a></li>');
+    $str = htmlspecialchars($name, ENT_QUOTES);
+    print("${str}さん、ぱろタイにようこそ！新規登録が成功しました。");
+
+    @session_start();
+//    print('<li><a href="login.html">ログインする</a></li>');
 }
 else{
-  print('新規登録が失敗しました。同名のユーザが存在する可能性があります。<br/>');
+    print('新規登録が失敗しました。同名のユーザが存在する可能性があります。<br/>');
 }
 
 ?>
