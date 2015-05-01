@@ -4,18 +4,21 @@ $dsn = 'mysql:dbname=transcribing_parro_typing;host=mysql507.db.sakura.ne.jp';
 $user = 'transcribing';
 $password = 'temppass01';
 
+$name = $_POST['name'];
+$pass = $_POST['pass'];
+
 try{
     $dbh = new PDO($dsn, $user, $password);
     $dbh->query('SET NAMES utf8');
 
     $stmt = $dbh->prepare('SELECT * FROM player WHERE player_name = ?');
-    $stmt->bindValue(1, $_POST['name'], PDO::PARAM_STR);
+    $stmt->bindValue(1, $name, PDO::PARAM_STR);
     $stmt->execute();
 
 
     $flag = False;
     while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-        if($result['player_pass'] === crypt($_POST['pass'], $result['player_pass'])){
+        if($result['player_pass'] === crypt($pass, $result['player_pass'])){
             $flag = True;
             break;
         }
@@ -63,8 +66,11 @@ catch (PDOException $e){
           <p>
 <?php
     if($flag){
-        echo "こんにちは、${_POST['name']}さん。ログインに成功しました。";
-        session_start();
+        $str = htmlspecialchars($name, ENT_QUOTES);
+        echo "こんにちは、${str}さん。ログインに成功しました。";
+
+        @session_start();
+        //$_SESSION['player_name'] = $_REQUEST['id'];
     }
     else{
         echo "ログインに失敗しました。ユーザ名またはパスワードが間違っています。";
