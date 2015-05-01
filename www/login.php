@@ -2,16 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
   <head>
     <meta name="robots" content="noindex, nofollow"/>
-    <title>リンク</title>
+    <title>ログイン</title>
+    <link rel="shortcut icon" href="favicon.ico" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <meta http-equiv="Content-Script-Type" content="text/javascript" />
     <meta name="copyright" content="Nikukyu-Punch" />
-    <link rel="shortcut icon" href="favicon.ico" />
     <meta name="description" content="ぱろタイは、写経を通してタイピングスキルを向上させることを目的とするゲームです" />
     <meta name="keywords" content="ぱろタイ,ぱろタイピング,parro_typing,parro,typing" />
-    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="/parro_typing/style.css" rel="stylesheet" type="text/css" />
   </head>
+
 
   <body>
 
@@ -29,23 +30,19 @@
 
 
         <div class="mainbox">
+          <h2>ログイン</h2>
+          <!-- <p></p> -->
+          <form action="" method="post">
+            user name : <input type="text" maxlength="8" name="name"/><br/>
+            (半角英数8文字以内) <br/>
+            password : <input type="text" maxlength="10" name="pass"/><br/>
+            <input type="submit"/>
+          </form>
 
-          <h2 class="mb1em">link</h2>
-
-          <table class="ta1">
-            <tr>
-              <th><a href="http://homeposition.net/~m%28as%29m/" target="_blank">m(as)mのホームポジション</a></th>
-              <td>m(as)m様のサイト。漢字直接入力や各種キーボードが紹介されています。</td>
-              <!-- <tr> -->
-              <!-- <th><a href="#" target="_blank">サイト名</a></th> -->
-              <!-- <td>サイト説明文。サンプルテキスト。</td> -->
-            </tr>
-          </table>
-
-          <!-- <p>sample text.</p> -->
 
         </div>
         <!--/mainbox-->
+
 
       </div>
       <!--/main-->
