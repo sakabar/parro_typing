@@ -1,0 +1,13 @@
+TOP	parro_typing	index.html	-	-	-	-
+(共通画像)	parro_typing	-	images	.png	-	-
+(共通CSS)	parro_typing	-	cssjs	.css	-	-
+(共通JS)	parro_typing	-	cssjs	.js	-	-
+ぱろタイとは	parro_typing	about.html	-	-	-	-
+新規登録	parro_typing	signup.php	-	-	-	-
+ログイン	parro_typing	login.php	-	-	-	-
+リンク	parro_typing	link.html	-	-	-	-
+ゲームTOP	parro_typing	-	app	index.html	-	-
+PlayGame	parro_typing	-	app	game.html	-	-
+問題作成	parro_typing	-	app	make.php	-	-
+ブックマーク	parro_typing	-	app	bookmark.php	-	-
+設定	parro_typing	-	app	config.php	-	-

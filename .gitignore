@@ -1,4 +1,5 @@
 *~
+*.bak
 
 copy_sources/*.rome
 copy_sources/*.txt
