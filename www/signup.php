@@ -56,7 +56,9 @@ catch (PDOException $e){
 if ($flag){
     $str = htmlspecialchars($name, ENT_QUOTES);
     print("${str}さん、ぱろタイにようこそ！新規登録が成功しました。");
-    print('<li><a href="login.html">ログインする</a></li>');
+
+    @session_start();
+//    print('<li><a href="login.html">ログインする</a></li>');
 }
 else{
     print('新規登録が失敗しました。同名のユーザが存在する可能性があります。<br/>');
