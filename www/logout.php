@@ -1,38 +1,14 @@
 <?php
+session_start();
 
-$dsn = 'mysql:dbname=transcribing_parro_typing;host=mysql507.db.sakura.ne.jp';
-$user = 'transcribing';
-$password = 'temppass01';
+if(isset($_SESSION['player_name'])){
+    $_SESSION = array();
 
-$name = $_POST['name'];
-$pass = $_POST['pass'];
-
-try{
-    $dbh = new PDO($dsn, $user, $password);
-    $dbh->query('SET NAMES utf8');
-
-    $stmt = $dbh->prepare('SELECT * FROM player WHERE player_name = ?');
-    $stmt->bindValue(1, $name, PDO::PARAM_STR);
-    $stmt->execute();
-
-
-    $flag = False;
-    while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-        if($result['player_pass'] === crypt($pass, $result['player_pass'])){
-            $flag = True;
-            break;
-        }
+    if(isset($_COOKIE[session_name()])){
+//        setcookie(session_name(), '', time() - 42000, '/');
     }
-}
-catch (PDOException $e){
-    print('Error:'.$e->getMessage());
-    die();
-}
-?>
-<?php
-if($flag){
-    session_start();
-    $_SESSION['player_name'] = $name;
+
+    session_destroy();
 }
 ?>
 
@@ -40,7 +16,7 @@ if($flag){
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
   <head>
     <meta name="robots" content="noindex, nofollow"/>
-    <title>ログイン</title>
+    <title>ログアウト</title>
     <link rel="shortcut icon" href="/parro_typing/favicon.ico" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -68,18 +44,9 @@ if($flag){
 
 
         <div class="mainbox">
-          <h2>ログイン</h2>
-          <p>
-<?php
-    if($flag){
-        echo "こんにちは、".htmlspecialchars($name, ENT_QUOTES)."さん。ログインに成功しました。";
-    }
-    else{
-        echo "ログインに失敗しました。ユーザ名またはパスワードが間違っています。";
-        echo '<li><a href="login.php">ログイン</a></li>';
-    }
-?>
-          </p>
+          <h2>ログアウト</h2>
+          <p>ログアウトしました</p>
+
         </div>
         <!--/mainbox-->
 
@@ -108,14 +75,7 @@ else{
           <li><a href="index.php">サイトTOP</a></li>
           <li><a href="app/index.php">ゲームTOP</a></li>
           <li><a href="about.php">about</a></li>
-<?php
-if(isset($_SESSION['player_name'])){
-    echo "<li><a href=\"logout.php\">ログアウト</a></li>\n";
-}
-else{
-    echo "<li><a href=\"login.php\">ログイン</a></li>\n";
-}
-?>
+          <li><a href="login.php">ログイン</a></li>
           <li><a href="link.php">link</a></li>
         </ul>
 
