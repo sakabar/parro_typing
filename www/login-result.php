@@ -11,7 +11,7 @@ try{
     $dbh = new PDO($dsn, $user, $password);
     $dbh->query('SET NAMES utf8');
 
-    $stmt = $dbh->prepare('SELECT * FROM player WHERE player_name = ?');
+    $stmt = $dbh->prepare('SELECT * FROM players WHERE player_name = ?');
     $stmt->bindValue(1, $name, PDO::PARAM_STR);
     $stmt->execute();
 

@@ -11,7 +11,7 @@ try{
     $dbh = new PDO($dsn, $user, $password);
     $dbh->query('SET NAMES utf8');
 
-    $sql = 'insert into player (player_name, player_pass) values (?, ?)';
+    $sql = 'insert into players (player_name, player_pass) values (?, ?)';
     $stmt = $dbh->prepare($sql);
     $flag = $stmt->execute(array($name, crypt($pass)));
 }
