@@ -49,7 +49,7 @@
           <li><a href="../index.php">サイトTOP</a></li>
           <li><a href="index.php">ゲームTOP</a></li>
           <li><a href="play-game.php">Play Game</a></li>
-          <li><a href="make.php">問題作成</a></li>
+          <li><a href="make.php">課題文作成</a></li>
           <li><a href="bookmark.php">ブックマーク</a></li>
           <li><a href="config.php">設定</a></li>
         </ul>

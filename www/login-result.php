@@ -20,6 +20,7 @@ try{
     while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
         if($result['player_pass'] === crypt($pass, $result['player_pass'])){
             $flag = True;
+	    $_SESSION['player_id'] = $result['player_id'];
             break;
         }
     }
