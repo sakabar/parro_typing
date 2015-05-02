@@ -16,3 +16,4 @@ cp $PARRO_HOME/www/app/play-game.php $HOME/www/parro_typing/app/
 cp $PARRO_HOME/www/app/index.php $HOME/www/parro_typing/app/
 cp $PARRO_HOME/www/app/main.css $HOME/www/parro_typing/app/
 cp $PARRO_HOME/www/app/make.php $HOME/www/parro_typing/app/
+cp $PARRO_HOME/www/app/make-result.php $HOME/www/parro_typing/app/

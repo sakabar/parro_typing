@@ -3,7 +3,7 @@
 parroHome=$HOME/work/parro_typing
 
 chars=`cat - | nkf -Z1 | sed -e 's/([^)]*)//g' | tr -d " #@/*―・%&'" | tr -d '\n'`
-echo $chars > $parroHome/copy_sources/$1.txt
+echo $chars > $parroHome/copy_sources/$1.script
 echo 'var scriptChars = "'$chars'"' > $parroHome/www/js/chars.js
 
 keys=`echo $chars | $parroHome/script/file2rome.sh | tr -d '\n'`

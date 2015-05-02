@@ -1,5 +1,43 @@
 <?php
-  session_start();
+session_start();
+
+if(isset($_SESSION['player_name'])){
+    $dsn = 'mysql:dbname=transcribing_parro_typing;host=mysql507.db.sakura.ne.jp';
+    $user = 'transcribing';
+    $password = 'temppass01';
+
+    $title = $_POST['title'];
+    $private = (bool)$_POST['private'];
+    $document = $_POST['document'];
+    $document_id = -1;
+
+    $document_owner_id = $_SESSION['player_id'];
+
+    try{
+        $dbh = new PDO($dsn, $user, $password);
+        $dbh->query('SET NAMES utf8');
+
+        //次に割り当てられるIDを獲得する
+        $stmt = $dbh->prepare("SHOW TABLE STATUS WHERE Name = 'documents' ");
+        $stmt->execute();
+
+        while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $document_id = $result['Auto_increment'];
+        }
+
+        //テーブルに書き込み
+        $sql = 'INSERT INTO documents (document_title, document_private, document_owner_id) VALUES (?, ?, ?)';
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($title, $private, $document_owner_id));
+
+        $filename = '/home/transcribing/work/parro_typing/copy_sources/'.$document_id.'.txt';
+        file_put_contents($filename, $document, LOCK_EX);
+    }
+    catch (PDOException $e){
+        print('Error:'.$e->getMessage());
+        die();
+    }
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
@@ -33,26 +71,18 @@
 
 
         <div class="mainbox">
-	  <h2>課題文作成</h2>
 <?php
-if(empty($_SESSION['player_name'])){
-  echo "まずログインしてください\n";
+if(!isset($_SESSION['player_name'])){
+    echo "<h2>エラー</h2>\n";
+    echo "<p>ログインしてから再登録してください</p>\n";
 }
 else{
-  echo <<<EOS
-<p>タイピングの問題を作成します</p>\n
-<form action="make-result.php" method="post">
-タイトル: <input type="text" maxlength="16" name="title" required/><br/>
-限定公開 : <input type="checkbox" name="private" value="True" /><br/>
-【注意】:著作権が切れてないない文書を登録するときには【必ず】限定公開にしてください。<br/>
-さもなくば、法律的な問題が発生する可能性があります。<br/>
-問題文: <br/>
-<textarea cols="100" rows="10" name="document" required></textarea><br/>
-<input type="submit" value="決定"/>
-</form>
-EOS;
+    echo "<h2>結果</h2>\n";
+    echo "<p>新しい課題文を作成しました</p>\n";
 }
-?>	  
+?>
+
+
         </div>
         <!--/mainbox-->
 
@@ -64,6 +94,7 @@ EOS;
       <div id="side">
 
         <a href="/parro_typing/index.php"><img src="/parro_typing/images/logo.gif" alt="SAMPLE WEBSITE" name="logo" width="200" height="140" id="logo" /></a><br />
+
 <h3>ユーザ情報</h3>
 <p>
 <?php

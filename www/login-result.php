@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 $dsn = 'mysql:dbname=transcribing_parro_typing;host=mysql507.db.sakura.ne.jp';
 $user = 'transcribing';
@@ -11,7 +12,7 @@ try{
     $dbh = new PDO($dsn, $user, $password);
     $dbh->query('SET NAMES utf8');
 
-    $stmt = $dbh->prepare('SELECT * FROM player WHERE player_name = ?');
+    $stmt = $dbh->prepare('SELECT * FROM players WHERE player_name = ?');
     $stmt->bindValue(1, $name, PDO::PARAM_STR);
     $stmt->execute();
 
@@ -20,6 +21,7 @@ try{
     while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
         if($result['player_pass'] === crypt($pass, $result['player_pass'])){
             $flag = True;
+	    $_SESSION['player_id'] = $result['player_id'];
             break;
         }
     }
@@ -31,7 +33,6 @@ catch (PDOException $e){
 ?>
 <?php
 if($flag){
-    session_start();
     $_SESSION['player_name'] = $name;
 }
 ?>
@@ -96,10 +97,11 @@ if($flag){
 <p>
 <?php
 if(isset($_SESSION['player_name'])){
-  echo "Player Name: ".htmlspecialchars($_SESSION['player_name'], ENT_QUOTES);
+    echo "user name: ".htmlspecialchars($_SESSION['player_name'], ENT_QUOTES)."<br/>\n";
+    echo "user id  : ".htmlspecialchars($_SESSION['player_id'], ENT_QUOTES)."<br/>\n";
 }
 else{
-  echo "ログインしていません";
+    echo "ログインしていません";
 }
 ?>
 </p>

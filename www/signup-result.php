@@ -11,7 +11,7 @@ try{
     $dbh = new PDO($dsn, $user, $password);
     $dbh->query('SET NAMES utf8');
 
-    $sql = 'insert into player (player_name, player_pass) values (?, ?)';
+    $sql = 'insert into players (player_name, player_pass) values (?, ?)';
     $stmt = $dbh->prepare($sql);
     $flag = $stmt->execute(array($name, crypt($pass)));
 }
@@ -82,10 +82,11 @@ else{
 <p>
 <?php
 if(isset($_SESSION['player_name'])){
-  echo "Player Name: ".htmlspecialchars($_SESSION['player_name'], ENT_QUOTES);
+    echo "user name: ".htmlspecialchars($_SESSION['player_name'], ENT_QUOTES)."<br/>\n";
+    echo "user id  : ".htmlspecialchars($_SESSION['player_id'], ENT_QUOTES)."<br/>\n";
 }
 else{
-  echo "ログインしていません";
+    echo "ログインしていません";
 }
 ?>
 </p>
