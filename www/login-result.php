@@ -74,7 +74,7 @@ catch (PDOException $e){
     }
     else{
         echo "ログインに失敗しました。ユーザ名またはパスワードが間違っています。";
-        echo '<li><a href="login.html">ログイン</a></li>';
+        echo '<li><a href="login.php">ログイン</a></li>';
     }
 ?>
           </p>
@@ -95,7 +95,7 @@ catch (PDOException $e){
           <li><a href="app/index.php">ゲームTOP</a></li>
           <li><a href="about.php">about</a></li>
           <li><a href="signup.php">新規登録</a></li>
-          <li><a href="login.html">ログイン</a></li>
+          <li><a href="login.php">ログイン</a></li>
           <li><a href="link.php">link</a></li>
         </ul>
 

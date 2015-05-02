@@ -58,7 +58,7 @@ if ($flag){
     print("${str}さん、ぱろタイにようこそ！新規登録が成功しました。");
 
     @session_start();
-//    print('<li><a href="login.html">ログインする</a></li>');
+//    print('<li><a href="login.php">ログインする</a></li>');
 }
 else{
     print('新規登録が失敗しました。同名のユーザが存在する可能性があります。<br/>');
@@ -83,7 +83,7 @@ else{
           <li><a href="app/index.php">ゲームTOP</a></li>
 	  <li><a href="about.php">about</a></li>
 	  <li><a href="signup.php">新規登録</a></li>
-	  <li><a href="login.html">ログイン</a></li>
+	  <li><a href="login.php">ログイン</a></li>
 	  <li><a href="link.php">link</a></li>
         </ul>
 
