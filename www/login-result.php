@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 $dsn = 'mysql:dbname=transcribing_parro_typing;host=mysql507.db.sakura.ne.jp';
 $user = 'transcribing';
@@ -32,7 +33,6 @@ catch (PDOException $e){
 ?>
 <?php
 if($flag){
-    session_start();
     $_SESSION['player_name'] = $name;
 }
 ?>
