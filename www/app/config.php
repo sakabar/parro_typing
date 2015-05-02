@@ -42,15 +42,15 @@
 
       <div id="side">
 
-        <a href="/parro_typing/index.html"><img src="/parro_typing/images/logo.gif" alt="SAMPLE WEBSITE" name="logo" width="200" height="140" id="logo" /></a><br />
+        <a href="/parro_typing/index.php"><img src="/parro_typing/images/logo.gif" alt="SAMPLE WEBSITE" name="logo" width="200" height="140" id="logo" /></a><br />
 
         <ul class="menu">
-          <li><a href="../index.html">サイトTOP</a></li>
-          <li><a href="index.html">ゲームTOP</a></li>
-          <li><a href="game.html">Play Game</a></li>
-          <li><a href="make.html">問題作成</a></li>
-          <li><a href="bookmark.html">ブックマーク</a></li>
-          <li><a href="config.html">設定</a></li>
+          <li><a href="../index.php">サイトTOP</a></li>
+          <li><a href="index.php">ゲームTOP</a></li>
+          <li><a href="play-game.php">Play Game</a></li>
+          <li><a href="make.php">問題作成</a></li>
+          <li><a href="bookmark.php">ブックマーク</a></li>
+          <li><a href="config.php">設定</a></li>
         </ul>
 
       </div>
