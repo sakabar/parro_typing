@@ -76,7 +76,7 @@ if($flag){
     }
     else{
         echo "ログインに失敗しました。ユーザ名またはパスワードが間違っています。";
-        echo '<li><a href="login.php">ログイン</a></li>';
+        echo '<li><a href="login.php">ログイン,新規登録</a></li>';
     }
 ?>
           </p>
@@ -113,7 +113,7 @@ if(isset($_SESSION['player_name'])){
     echo "<li><a href=\"logout.php\">ログアウト</a></li>\n";
 }
 else{
-    echo "<li><a href=\"login.php\">ログイン</a></li>\n";
+    echo "<li><a href=\"login.php\">ログイン,新規登録</a></li>\n";
 }
 ?>
           <li><a href="link.php">link</a></li>
