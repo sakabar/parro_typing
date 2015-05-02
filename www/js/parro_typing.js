@@ -29,8 +29,10 @@ var lastClock = "" //直前に表示した時間
 var typedRightKeySum = 0; // 今までに正しく打ったキーの合計
 var charPerMinGoal = 120; // 文字/分の目標
 var delimiter = " " //ストローク表示の区切り
-var dispDelimiterFlag = true //ストローク表示に区切り文字を含めるか?
+var dispDelimiterFlag = false //ストローク表示に区切り文字を含めるか?
 var stepwiseKeyboardFlag = true //キーボードの表示を階段状にする
+var dispCharCount = 1 //何文字先のキーまで色をつけるか
+var paintKeyFlag = true //キーをグラフィカルに表示するか?
 
 function init(){
     keyInd = 0;
@@ -55,7 +57,9 @@ function toggleStartStop(){
         dispChars = scriptChars.substring(0, dispCharHideSize+dispCharWindowSize-1);
         dispKeys = getDispKeys(scriptKeys);
     }
-    paintKeys();
+    if(paintKeyFlag){
+        paintKeys();
+    }
     paint();
 }
 
@@ -145,7 +149,9 @@ function typeKey(evt){
             finish();
         }
         else{
-            paintKeys()
+            if(paintKeyFlag){
+                paintKeys()
+            }
             paint();
         }
     }
@@ -254,6 +260,15 @@ function toggleDispKey(){
     }
 }
 
+function togglePaintKey(){
+    paintKeyFlag = ! paintKeyFlag
+    if(counting){
+        paint()
+    }
+}
+
+
+
 
 function clock(){
     if (counting){
@@ -275,17 +290,17 @@ function paintKeyboard(){
     var canvas = document.getElementById('keyboradCanvas')
     if(canvas.getContext){
         var context = canvas.getContext('2d')
-        context.globalAlpha = 1.0 //透過度
+        //context.globalAlpha = 1.0 //透過度
         context.fillStyle = "rgb(0, 0, 0)"
         context.font = "30pt Arial"
         context.textBaseline = "middle"
         context.textAlign = "center"
 
 
-        origX = 110 //左キーボードの左上のX座標
+        sqLen = 60 //キーの大きさ
+        origX = sqLen * 2 + 20 //左キーボードの左上のX座標
         origY = 10 //左キーボードの左上のY座標
-        sqLen = 50 //キーの大きさ
-        margin = 10 //左キーボードと右キーボードの間隔
+        margin = sqLen/4 //左キーボードと右キーボードの間隔
 
         //左キーボード描画
         for(xind=0;xind<5;xind++){
@@ -299,6 +314,17 @@ function paintKeyboard(){
                     context.strokeRect(origX + sqLen*xind,origY + sqLen*yind,sqLen,sqLen)
                 }
             }
+        }
+
+        //ホームポジションの描画(fjキーを強調)
+        if(stepwiseKeyboardFlag){
+            eps = 2
+            context.strokeRect(origX + sqLen * 5 + margin + 1*sqLen + sqLen+ eps ,origY + 2*sqLen + eps ,sqLen-eps*2,sqLen-eps*2)
+            context.strokeRect(origX + sqLen*3+ sqLen +eps  ,origY + sqLen*2+ eps,sqLen-eps*2,sqLen-eps*2)}
+        else{
+            eps = 2
+            context.strokeRect(origX + sqLen * 5 + margin + 1*sqLen + eps ,origY + 2*sqLen + eps ,sqLen-eps*2,sqLen-eps*2)
+            context.strokeRect(origX + sqLen*3+eps,origY + sqLen*2+eps,sqLen-eps*2,sqLen-eps*2)
         }
 
         //右キーボード描画
@@ -382,92 +408,114 @@ function paintKeys(){
         context.clearRect(0,0,canvas.width, canvas.height)
         paintKeyboard()
 
-        context.globalAlpha = 1.0 //透過度
+        //context.globalAlpha = 1.0 //透過度
         context.font = "30pt Arial"
         context.textBaseline = "middle"
         context.textAlign = "center"
 
         //特定のキーに色を塗る
-        tmp = scriptKeys.substring(keyInd, scriptKeys.Length)
-        delimInd = 0
-        dispCharCount = 1 //何文字先のキーまで色をつけるか
-        for(i=0;i<dispCharCount;i++){
-            t = tmp.indexOf(delimiter, delimInd+1)
-            if(t == -1){
-                delimInd = tmp.Length
-            }
-            else{
-                delimInd = t
-            }
+        var regex = new RegExp(delimiter, "g")
+        tmp = scriptKeys.substring(keyInd, scriptKeys.Length).replace(regex, delimiter).split(delimiter)
+
+        if(dispCharCount > tmp.length){
+            dispCharCount = tmp.length
         }
-        str = tmp.substring(0, delimInd)
-
-        keys = "1234567890qwertyuiopasdfghjkl;zxcvbnm,./"
-        context.globalAlpha = 0.5
-        for(i=0; i<str.length; i++){
-            ch = str[i]
-
-            if((ch != ch.toLowerCase()) && i == 0){
-                //シフトキー
-                context.fillStyle = "rgb(255, 0, 0)"
-                if(stepwiseKeyboardFlag){
-                    context.rect(origX-sqLen*2+sqLen/2*3, origY+sqLen*3, sqLen*2, sqLen)
-                }
-                else{
-                    context.rect(origX-sqLen*2, origY+sqLen*3, sqLen*2, sqLen)
-                }
-            }
-
-
-            ind = keys.indexOf(ch.toLowerCase())
-            if(ind == -1){
-                if(ch == ' '){
-                    //スペースキー
-                    if(stepwiseKeyboardFlag){
-                        context.rect(origX+sqLen*3+sqLen/2*3, origY+sqLen*4, sqLen*4+margin, sqLen)
-                    }
-                    else{
-                        context.rect(origX+sqLen*3, origY+sqLen*4, sqLen*4+margin, sqLen)
-                    }
-                }
-            }
-            else{
-                yinnnnd = Math.floor(ind / 10)
-                xinnnd = ind % 10
-                X = 0
-                if(xinnnd >= 5){
-                    X = origX+sqLen*xinnnd+margin
-                }
-                else{
-                    X = origX+sqLen*xinnnd
-                }
-                Y = origY+sqLen*yinnnnd
-                if(stepwiseKeyboardFlag){
-                    context.rect(X+sqLen/2*yinnnnd, Y, sqLen, sqLen)
-                }
-                else{
-                    context.rect(X, Y, sqLen, sqLen)
-                }
-            }
-
-            if(i==0){
-                context.fillStyle = "rgb(255, 0, 0)"
-            }
-            else{
-                r = 0
-                b = 255 - 50 * i
-                context.fillStyle = "rgb(" + r + ", 0, " + b+ ")"
-            }
-
-            context.fill()
-            context.beginPath()
-            context.closePath()
+        for(i=dispCharCount-1;i>=0;i--){
+            paintStroke(tmp[i], i)
         }
-        context.beginPath()
-        context.closePath()
-
     }
 }
+
+//cnt打後に打つstrに色を付ける
+function paintStroke(str, cnt){
+    var i = 0
+    for(i=0; i<str.length; i++){
+        paintKey(str[i], cnt, i)
+    }
+}
+
+function paintKey(ch, cnt0, charCnt){
+    var canvas = document.getElementById('keyboradCanvas')
+    if(canvas.getContext){
+        var context = canvas.getContext('2d')
+
+        keys = "1234567890qwertyuiopasdfghjkl;zxcvbnm,./"
+        //context.globalAlpha = 1.0
+
+        if((ch != ch.toLowerCase()) && charCnt == 0){
+            //シフトキー
+            context.fillStyle = "rgb(255, 0, 0)"
+            if(stepwiseKeyboardFlag){
+                context.rect(origX-sqLen*2+sqLen/2*3, origY+sqLen*3, sqLen*2, sqLen)
+            }
+            else{
+                context.rect(origX-sqLen*2, origY+sqLen*3, sqLen*2, sqLen)
+            }
+        }
+
+        ind = keys.indexOf(ch.toLowerCase())
+
+        if(ind == -1){
+            if(ch == ' '){
+                //スペースキー
+                if(stepwiseKeyboardFlag){
+                    context.rect(origX+sqLen*3+sqLen/2*3, origY+sqLen*4, sqLen*4+margin, sqLen)
+                }
+                else{
+                    context.rect(origX+sqLen*3, origY+sqLen*4, sqLen*4+margin, sqLen)
+                }
+            }
+        }
+        else{
+            yinnnnd = Math.floor(ind / 10)
+            xinnnd = ind % 10
+            X = 0
+            if(xinnnd >= 5){
+                X = origX+sqLen*xinnnd+margin
+            }
+            else{
+                X = origX+sqLen*xinnnd
+            }
+            Y = origY+sqLen*yinnnnd
+            if(stepwiseKeyboardFlag){
+                context.rect(X+sqLen/2*yinnnnd, Y, sqLen, sqLen)
+            }
+            else{
+                context.rect(X, Y, sqLen, sqLen)
+            }
+        }
+
+        if(cnt0 == 0){
+            if(charCnt == 0){
+                context.fillStyle = "rgb(255, 0, 0)"
+            }
+            else{
+                context.fillStyle = "rgb(178, 34, 34)"
+            }
+        }
+        else if(cnt0 == 1){
+            if(charCnt == 0){
+                context.fillStyle = "rgb(0, 0, 255)"
+            }
+            else{
+                context.fillStyle = "rgb(30, 144, 255)"
+            }
+        }
+        else{
+            if(charCnt == 0){
+                context.fillStyle = "rgb(0, 255, 0)"
+            }
+            else{
+                context.fillStyle = "rgb(50, 205, 50)"
+            }
+        }
+
+        context.fill()
+        context.beginPath()
+        context.closePath()
+    }
+}
+
 
 function paint(){
     document.getElementById('dispCharInput').value = dispChars
