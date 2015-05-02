@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
   <head>
@@ -6,7 +10,7 @@
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <meta http-equiv="Content-Script-Type" content="text/javascript" />
     <meta name="copyright" content="Nikukyu-Punch" />
-    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="shortcut icon" href="/parro_typing/favicon.ico" />
     <meta name="description" content="ぱろタイは、写経を通してタイピングスキルを向上させることを目的とするゲームです" />
     <meta name="keywords" content="ぱろタイ,ぱろタイピング,parro_typing,parro,typing" />
     <link href="/parro_typing/style.css" rel="stylesheet" type="text/css" />
@@ -29,7 +33,6 @@
 
 
         <div class="mainbox">
-
           <h2>はじめに</h2>
           <p>ぱろタイ (parro typing) にようこそ。ぱろタイはタイピングの練習をするためのソフトウェアです。現在、サンプルとして夏目漱石の「坊っちゃん」を課題文としていますが、後々はユーザが好きな文を課題文として設定できるようにする予定です。FireFox以外、動作を検証していません。</p>
 
@@ -43,6 +46,8 @@
 
           <h2>What's New</h2>
           <dl class="new">
+            <dt>2015/05/02</dt>
+            <dd>ログイン, ログアウト機能の実装</dd>
             <dt>2015/05/01</dt>
             <dd>ディレクトリマップを作成</dd>
             <dt>2015/04/28</dt>
@@ -65,7 +70,7 @@
             </ul>
             <li>ログイン関係</li>
             <ul>
-              <li>ログイン機能の実装</li>
+              <li><del>ログイン機能の実装</del> (完了)</li>
               <li>ユーザごとの情報をDBに保存</li>
             </ul>
             <li>キーボード</li>
@@ -102,15 +107,32 @@
 
 
       <div id="side">
-
         <a href="index.php"><img src="images/logo.gif" alt="SAMPLE WEBSITE" name="logo" width="200" height="140" id="logo" /></a><br />
+
+<h3>ユーザ情報</h3>
+<p>
+<?php
+if(isset($_SESSION['player_name'])){
+  echo "Player Name: ".htmlspecialchars($_SESSION['player_name'], ENT_QUOTES);
+}
+else{
+  echo "ログインしていません";
+}
+?>
+</p>
 
         <ul class="menu">
           <li><a href="index.php">サイトTOP</a></li>
           <li><a href="app/index.php">ゲームTOP</a></li>
           <li><a href="about.php">about</a></li>
-          <li><a href="signup.php">新規登録</a></li>
-          <li><a href="login.php">ログイン</a></li>
+<?php
+if(isset($_SESSION['player_name'])){
+    echo "<li><a href=\"logout.php\">ログアウト</a></li>\n";
+}
+else{
+    echo "<li><a href=\"login.php\">ログイン</a></li>\n";
+}
+?>
           <li><a href="link.php">link</a></li>
         </ul>
 

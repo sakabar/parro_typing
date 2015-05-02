@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
   <head>
@@ -7,7 +10,7 @@
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <meta http-equiv="Content-Script-Type" content="text/javascript" />
     <meta name="copyright" content="Nikukyu-Punch" />
-    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="shortcut icon" href="/parro_typing/favicon.ico" />
     <meta name="description" content="ぱろタイは、写経を通してタイピングスキルを向上させることを目的とするゲームです" />
     <meta name="keywords" content="ぱろタイ,ぱろタイピング,parro_typing,parro,typing" />
     <link href="style.css" rel="stylesheet" type="text/css" />
@@ -55,12 +58,30 @@
 
         <a href="index.php"><img src="images/logo.gif" alt="SAMPLE WEBSITE" name="logo" width="200" height="140" id="logo" /></a><br />
 
+<h3>ユーザ情報</h3>
+<p>
+<?php
+if(isset($_SESSION['player_name'])){
+  echo "Player Name: ".htmlspecialchars($_SESSION['player_name'], ENT_QUOTES);
+}
+else{
+  echo "ログインしていません";
+}
+?>
+</p>
+
         <ul class="menu">
           <li><a href="index.php">サイトTOP</a></li>
           <li><a href="app/index.php">ゲームTOP</a></li>
           <li><a href="about.php">about</a></li>
-          <li><a href="signup.php">新規登録</a></li>
-          <li><a href="login.php">ログイン</a></li>
+<?php
+if(isset($_SESSION['player_name'])){
+    echo "<li><a href=\"logout.php\">ログアウト</a></li>\n";
+}
+else{
+    echo "<li><a href=\"login.php\">ログイン</a></li>\n";
+}
+?>
           <li><a href="link.php">link</a></li>
         </ul>
 

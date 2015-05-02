@@ -58,7 +58,7 @@ if ($flag){
     print("${str}さん、ぱろタイにようこそ！新規登録が成功しました。");
 
     @session_start();
-//    print('<li><a href="login.php">ログインする</a></li>');
+    $_SESSION['player_name'] = $name;
 }
 else{
     print('新規登録が失敗しました。同名のユーザが存在する可能性があります。<br/>');
@@ -78,12 +78,30 @@ else{
 
         <a href="index.php"><img src="images/logo.gif" alt="SAMPLE WEBSITE" name="logo" width="200" height="140" id="logo" /></a><br />
 
+<h3>ユーザ情報</h3>
+<p>
+<?php
+if(isset($_SESSION['player_name'])){
+  echo "Player Name: ".htmlspecialchars($_SESSION['player_name'], ENT_QUOTES);
+}
+else{
+  echo "ログインしていません";
+}
+?>
+</p>
+
         <ul class="menu">
 	  <li><a href="index.php">サイトTOP</a></li>
           <li><a href="app/index.php">ゲームTOP</a></li>
 	  <li><a href="about.php">about</a></li>
-	  <li><a href="signup.php">新規登録</a></li>
-	  <li><a href="login.php">ログイン</a></li>
+<?php
+if(isset($_SESSION['player_name'])){
+    echo "<li><a href=\"logout.php\">ログアウト</a></li>\n";
+}
+else{
+    echo "<li><a href=\"login.php\">ログイン</a></li>\n";
+}
+?>
 	  <li><a href="link.php">link</a></li>
         </ul>
 
