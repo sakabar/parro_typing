@@ -59,7 +59,7 @@
           <li><a href="index.php">サイトTOP</a></li>
           <li><a href="app/index.php">ゲームTOP</a></li>
           <li><a href="about.php">about</a></li>
-          <li><a href="signup.html">新規登録</a></li>
+          <li><a href="signup.php">新規登録</a></li>
           <li><a href="login.html">ログイン</a></li>
           <li><a href="link.php">link</a></li>
         </ul>
