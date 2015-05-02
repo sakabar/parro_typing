@@ -56,15 +56,15 @@
 
       <div id="side">
 
-        <a href="index.html"><img src="images/logo.gif" alt="SAMPLE WEBSITE" name="logo" width="200" height="140" id="logo" /></a><br />
+        <a href="index.php"><img src="images/logo.gif" alt="SAMPLE WEBSITE" name="logo" width="200" height="140" id="logo" /></a><br />
 
         <ul class="menu">
-          <li><a href="index.html">サイトTOP</a></li>
-          <li><a href="app/index.html">ゲームTOP</a></li>
-          <li><a href="about.html">about</a></li>
-          <li><a href="signup.html">新規登録</a></li>
-          <li><a href="login.html">ログイン</a></li>
-          <li><a href="link.html">link</a></li>
+          <li><a href="index.php">サイトTOP</a></li>
+          <li><a href="app/index.php">ゲームTOP</a></li>
+          <li><a href="about.php">about</a></li>
+          <li><a href="signup.php">新規登録</a></li>
+          <li><a href="login.php">ログイン</a></li>
+          <li><a href="link.php">link</a></li>
         </ul>
 
       </div>
