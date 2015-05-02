@@ -52,10 +52,11 @@
 <p>
 <?php
 if(isset($_SESSION['player_name'])){
-  echo "Player Name: ".htmlspecialchars($_SESSION['player_name'], ENT_QUOTES);
+    echo "user name: ".htmlspecialchars($_SESSION['player_name'], ENT_QUOTES)."<br/>\n";
+    echo "user id  : ".htmlspecialchars($_SESSION['player_id'], ENT_QUOTES)."<br/>\n";
 }
 else{
-  echo "ログインしていません";
+    echo "ログインしていません";
 }
 ?>
 </p>

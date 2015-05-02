@@ -95,6 +95,19 @@ else{
 
         <a href="/parro_typing/index.php"><img src="/parro_typing/images/logo.gif" alt="SAMPLE WEBSITE" name="logo" width="200" height="140" id="logo" /></a><br />
 
+<h3>ユーザ情報</h3>
+<p>
+<?php
+if(isset($_SESSION['player_name'])){
+  echo "user name: ".htmlspecialchars($_SESSION['player_name'], ENT_QUOTES)."<br/>\n";
+  echo "user id  : ".htmlspecialchars($_SESSION['player_id'], ENT_QUOTES)."<br/>\n";
+}
+else{
+  echo "ログインしていません";
+}
+?>
+</p>
+
         <ul class="menu">
           <li><a href="../index.php">サイトTOP</a></li>
           <li><a href="index.php">ゲームTOP</a></li>

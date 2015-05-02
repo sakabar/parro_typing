@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
   <head>
@@ -44,6 +47,19 @@
       <div id="side">
 
         <a href="/parro_typing/index.php"><img src="/parro_typing/images/logo.gif" alt="SAMPLE WEBSITE" name="logo" width="200" height="140" id="logo" /></a><br />
+
+<h3>ユーザ情報</h3>
+<p>
+<?php
+if(isset($_SESSION['player_name'])){
+  echo "user name: ".htmlspecialchars($_SESSION['player_name'], ENT_QUOTES)."<br/>\n";
+  echo "user id  : ".htmlspecialchars($_SESSION['player_id'], ENT_QUOTES)."<br/>\n";
+}
+else{
+  echo "ログインしていません";
+}
+?>
+</p>
 
         <ul class="menu">
           <li><a href="../index.php">サイトTOP</a></li>
