@@ -1,0 +1,1 @@
+var scriptKeys = "oyayuzuri@@@no@muteppou@@@de@kodomo@@no@toki@ka@ra@sonn@ba@ka@ri@si@te@i@ru@.@shougakkou@@@ni@iru@@jibunn@@gakkou@@no@ni@kai@ka@ra@tobiori@@@@te@isshuukann@@@ho@do@kosi@wo@nukasi@@@ta@koto@ga@a@ru@.@na@ze@so@nn@na@muyami@@wo@si@ta@to@kiku@@hito@ga@a@ru@ka@mo@sire@@nu@.@"

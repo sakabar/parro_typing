@@ -1,0 +1,2 @@
+clock();
+document.onkeydown = typeKey;
